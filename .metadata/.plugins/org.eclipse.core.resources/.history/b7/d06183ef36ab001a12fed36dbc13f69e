@@ -1,0 +1,46 @@
+package com.FormConfig.service;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.FormConfig.model.Component;
+import com.FormConfig.model.ComponentLinechart;
+import com.FormConfig.model.Template;
+import com.FormConfig.repo.FormConfigRepository;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+@Service
+public class Linechartservice {
+
+	
+	@Autowired
+	private FormConfigRepository configrepo;
+	
+	public void addLinechart( ComponentLinechart lchart ) {
+		//lchart = new ComponentLinechart();
+		ObjectMapper oMapper = new ObjectMapper();
+		/* if(lchart==null) {
+			 System.out.println("you entered an empty linechart ! ");
+		 }
+		 else {*/
+		
+			Template template = configrepo.findTemplateById(lchart.getIdtemplate());
+			Map <String,Object> map = oMapper.convertValue(lchart, Map.class);
+			Component component = new Component(map);
+			//List<Component> list = new ArrayList<>();
+			//list.add(component);
+			if (template.getStructure()==null) {
+				template.setStructure(component);
+				System.out.println(template.getStructure());
+			}
+			/*else {
+			template.addstructure(component);}*/
+			//template.setLchart(lchart);
+			configrepo.save(template);
+		}
+	
+}

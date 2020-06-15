@@ -1,0 +1,109 @@
+package com.FormConfig.model;
+
+import java.util.List;
+import java.util.Map;
+
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.Field;
+
+import com.FormConfig.annotation.CascadeSave;
+
+@Document(collection="template")
+public class Template {
+
+	@Id
+	private String id;	
+	private String author;
+	private String templatename;
+	private String typetemp;
+	
+
+	private List <Component> structure;
+	
+
+	//@DBRef
+	/*@CascadeSave
+	@Field("piechart")
+	private ComponentPiechart pchart;
+	//@DBRef
+	@CascadeSave
+	@Field("linechart")
+	private ComponentLinechart lchart;
+	
+	@CascadeSave
+	@Field("paragraph")
+	private ComponentParagraph paragraph;
+	
+	
+	public ComponentPiechart getPchart() {
+		return pchart;
+	}
+	public void setPchart(ComponentPiechart pchart) {
+		this.pchart = pchart;
+	}
+	public ComponentLinechart getLchart() {
+		return lchart;
+	}
+	public void setLchart(ComponentLinechart lchart) {
+		this.lchart = lchart;
+	}*/
+	public String getId() {
+		return id;
+	}
+	public void setId(String id) {
+		this.id = id;
+	}
+	
+
+	
+	public String getTemplatename() {
+		return templatename;
+	}
+	public void setTemplatename(String templatename) {
+		this.templatename = templatename;
+	}
+/*	public ComponentParagraph getParagraph() {
+		return paragraph;
+	}
+	public void setParagraph(ComponentParagraph paragraph) {
+		this.paragraph = paragraph;
+	}*/
+	public String getAuthor() {
+		return author;
+	}
+	public void setAuthor(String author) {
+		this.author = author;
+	}
+	public String getTypetemp() {
+		return typetemp;
+	}
+	public void setTypetemp(String typetemp) {
+		this.typetemp = typetemp;
+	}
+	
+	
+	public List<Component> getStructure() {
+		return structure;
+	}
+	public void setStructure(List<Component> structure) {
+		this.structure = structure;
+	}
+	public void addstructure(Component m) {
+		this.structure.add(m);
+	}
+	public Template(String id, String author, String templatename, String typetemp,
+			List<Map<String, Object>> structure) {
+		super();
+		this.id = id;
+		this.author = author;
+		this.templatename = templatename;
+		this.typetemp = typetemp;
+		this.structure = structure;
+	}
+
+	
+	
+	
+	
+}

@@ -1,0 +1,21 @@
+package com.FormConfig.service;
+
+import org.springframework.beans.factory.annotation.Autowired;
+
+import com.FormConfig.model.ComponentLinechart;
+import com.FormConfig.model.Template;
+import com.FormConfig.repo.FormConfigRepository;
+
+public class Linechartservice {
+
+	
+	@Autowired
+	private FormConfigRepository configrepo;
+	
+	public void addLinechart( ComponentLinechart lchart ) {
+		
+			Template template = configrepo.findTemplateById(lchart.getIdtemplate());
+			template.setLchart(lchart);
+		}
+	
+}

@@ -1,0 +1,89 @@
+package com.FormConfig.service;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import com.FormConfig.repo.FormConfigRepository;
+import com.FormConfig.repo.LinechartRepository;
+import com.FormConfig.model.ComponentLinechart;
+import com.FormConfig.model.Template;
+
+@Service
+public class FormConfigService {
+	
+	public String currentID;
+	@Autowired
+	private FormConfigRepository configrepo;
+	@Autowired
+	private LinechartRepository lchartrepo;
+	
+	 public Template createconfig (Template temp) {
+		 
+				configrepo.save(temp);
+				this.currentID = temp.getId();
+				return temp;
+	}
+	/* public Template editlchart (ComponentLinechart lchart) {
+		 Template lastTemp;
+		 lastTemp = this.getLastTemp();
+		 lastTemp.setLchart(lchart);
+		 //lastTemp.sgetLchart(lchart).
+		 System.out.println("last one "+ lastTemp.getFirstname());
+		 
+		 configrepo.save(lastTemp);
+		 lchartrepo.save(lchart);
+		 System.out.println("last one "+ lastTemp.getLchart().getNb_columns());
+		 return lastTemp;
+		 
+	 }*/
+	/* public Template editTemplate (Template temp , ComponentLinechart lchart) {
+		 
+		 temp.setLchart(lchart);
+		 return configrepo.save(temp);
+	 }*/
+	 public void editTemplate(String id , Template temp) {
+		Template tempToEdit = configrepo.findTemplateById(id);
+		if(temp.getAuthor()== null) {
+			temp.setAuthor(tempToEdit.getAuthor());
+		}
+		if(temp.getTemplatename()== null) {
+			temp.setTemplatename(tempToEdit.getTemplatename());
+		}
+		if(temp.getTypetemp()== null) {
+			temp.setTypetemp(tempToEdit.getTypetemp());
+		}
+		
+		if(temp.getStructure()== null) {
+			temp.setStructure(tempToEdit.getStructure());
+		}
+		tempToEdit.setAuthor(temp.getAuthor());
+		tempToEdit.setTemplatename(temp.getTemplatename());
+		tempToEdit.setTypetemp(temp.getTypetemp());
+		tempToEdit.setStructure(temp.getStructure()); 
+		configrepo.save(tempToEdit);
+		
+	 }
+	 public void deleteTemplate (String id) {
+		 Template tempToDelete = configrepo.findTemplateById(id);
+		 configrepo.delete(tempToDelete);
+		 
+	 }
+	 public List<Template> getAllConfig() {
+		 return configrepo.findAll();
+	 }
+	 
+	 public Template getLastTemp() {
+		 List<Template> list = configrepo.findAll();
+		 
+		 return list.get(list.size() - 1);
+		 
+	 }
+	
+	 
+	 
+	
+
+}

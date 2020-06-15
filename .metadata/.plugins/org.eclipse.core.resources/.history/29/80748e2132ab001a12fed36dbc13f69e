@@ -1,0 +1,24 @@
+package com.FormConfig.model;
+
+import java.util.Map;
+
+public class Component {
+	
+	private Map <String,Object> element;
+
+	public Map<String, Object> getElement() {
+		return element;
+	}
+
+	public void setElement(Map<String, Object> element) {
+		this.element = element;
+	}
+
+	public Component(Map<String, Object> element) {
+		super();
+		this.element = element;
+	}
+	
+	
+
+}

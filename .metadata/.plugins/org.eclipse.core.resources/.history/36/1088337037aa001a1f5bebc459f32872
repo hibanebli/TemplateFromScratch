@@ -1,0 +1,27 @@
+package com.FormConfig.service;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.FormConfig.model.ComponentLinechart;
+import com.FormConfig.model.Template;
+import com.FormConfig.repo.FormConfigRepository;
+
+@Service
+public class Linechartservice {
+
+	
+	@Autowired
+	private FormConfigRepository configrepo;
+	
+	public void addLinechart( ComponentLinechart lchart ) {
+		 if(lchart==null) {
+			 System.out.println("you entered an empty linechart ! ");
+		 }
+		 else {
+			Template template = configrepo.findTemplateById(lchart.getIdtemplate());
+			template.setLchart(lchart);
+			configrepo.save(template);
+		}}
+	
+}

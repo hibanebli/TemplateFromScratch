@@ -1,0 +1,95 @@
+package com.FormConfig.controller;
+
+import java.util.List;
+import java.util.Map;
+
+import javax.validation.Valid;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.FormConfig.model.Component;
+import com.FormConfig.model.ComponentLinechart;
+import com.FormConfig.model.ComponentParagraph;
+import com.FormConfig.model.ComponentPiechart;
+import com.FormConfig.model.Template;
+import com.FormConfig.service.Componentservice;
+import com.FormConfig.service.FormConfigService;
+import com.FormConfig.service.Linechartservice;
+import com.FormConfig.service.Paragraphservice;
+import com.FormConfig.service.Piechartservice;
+
+@RestController
+@RequestMapping("/config")
+@CrossOrigin("*")
+public class FormConfigController {
+	
+	@Autowired
+	private FormConfigService service;
+	
+	@Autowired
+	private  Linechartservice linechartservice;
+	
+	@Autowired
+	private  Piechartservice piechartservice;
+	
+	@Autowired
+	private  Paragraphservice paragraphservice;
+	
+	@Autowired
+	private  Componentservice componentservice;
+	
+	@PostMapping("/new")
+    public Template createConfig(@Valid @RequestBody Template temp) {
+   
+        return service.createconfig(temp);
+    }
+	
+	@GetMapping("/all")
+	public List<Template> getAllConfig () {
+		return service.getAllConfig();
+	}
+	
+	@GetMapping("/last")
+	public Template gatLastTemp() {
+		return service.getLastTemp();
+	}
+	
+	/*@PostMapping("/edit/{id}")	
+	public void editTemplate(@PathVariable("id") String id, @RequestBody Template temp) {
+		 service.editTemplate(id,temp);
+	}*/
+	@DeleteMapping("/delete/{id}")
+	public void deleteTemplate(@PathVariable("id") String id) {
+		service.deleteTemplate(id);
+	}
+	@PostMapping("/linechart")	
+	public void addLinechart( @RequestBody ComponentLinechart lchart) {
+		 linechartservice.addLinechart(lchart);
+		 System.out.println("lchart entered "+lchart);
+	}
+	@PostMapping("/piechart")	
+	public void addPiechart( @RequestBody ComponentPiechart pchart) {
+		 piechartservice.addPiechart(pchart);
+	}
+	@PostMapping("/paragraph")	
+	public void addParagraph( @RequestBody ComponentParagraph paragraph) {
+		 paragraphservice.addParagraph(paragraph);
+	}
+	@PostMapping("/component/{id}")	
+	public void addComponent(@PathVariable("id") String id, @RequestBody Map<String,Object> map) {
+		 componentservice.addComponent(map,id);
+	}
+	
+	/*@PostMapping("/final")
+	public Template editTemplate (@Valid @RequestBody Template temp , ComponentLinechart lchart) {
+		return service.editTemplate(temp, lchart);
+	}*/
+}
